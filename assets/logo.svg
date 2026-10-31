@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Omarchy Player logo">
+  <rect x="8" y="8" width="240" height="240" fill="#1e1e2e" stroke="#89b4fa" stroke-width="8"/>
+  <g fill="#89b4fa">
+    <path d="M44 196h24v-44H44zM76 196h24v-92H76zM156 196h24v-68h-24zM188 196h24v-108h-24z"/>
+    <path d="M112 62l44 36-44 36z" fill="#cdd6f4"/>
+    <path d="M108 196h24v-44h-24z"/>
+  </g>
+  <g fill="#1e1e2e">
+    <path d="M40 182h176v5H40zM40 166h176v5H40zM40 150h176v5H40zM40 134h176v5H40zM40 118h176v5H40zM40 102h176v5H40z"/>
+  </g>
+  <path d="M112 54l52 44-52 44z" fill="#cdd6f4"/>
+</svg>

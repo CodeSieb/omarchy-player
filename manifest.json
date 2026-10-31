@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "siebe.omarchy-player",
+  "name": "Omarchy Player",
+  "version": "1.0.0",
+  "author": "CodeSieb",
+  "license": "MIT",
+  "description": "A themed now-playing panel for Spotify and any other MPRIS player, with a live audio spectrum.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Omarchy Player",
+    "description": "Now playing in the bar, with full controls and a live spectrum in the popup.",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "maxTitleLength": 32,
+      "visualizer": "on",
+      "hideWhenIdle": "on"
+    },
+    "schema": [
+      {
+        "key": "maxTitleLength",
+        "type": "integer",
+        "label": "Title length in the bar (0 hides it)",
+        "min": 0,
+        "max": 80,
+        "step": 1,
+        "defaultValue": 32
+      },
+      {
+        "key": "visualizer",
+        "type": "enum",
+        "label": "Live audio spectrum",
+        "options": [
+          {
+            "value": "on",
+            "label": "On"
+          },
+          {
+            "value": "off",
+            "label": "Off"
+          }
+        ],
+        "defaultValue": "on"
+      },
+      {
+        "key": "hideWhenIdle",
+        "type": "enum",
+        "label": "Hide when no player is open",
+        "options": [
+          {
+            "value": "on",
+            "label": "On"
+          },
+          {
+            "value": "off",
+            "label": "Off"
+          }
+        ],
+        "defaultValue": "on"
+      }
+    ]
+  }
+}
