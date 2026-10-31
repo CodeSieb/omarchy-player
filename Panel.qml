@@ -207,6 +207,15 @@ Panel {
     }
   }
 
+  // Window classes usually match the desktop entry, but case varies, so match both ways.
+  function showPlayerWindow() {
+    var name = player.desktopEntry || player.identity
+    var pattern = "(?i)^(" + name.replace(/[^A-Za-z0-9_.-]/g, "") + ")$"
+    Quickshell.execDetached(["hyprctl", "dispatch",
+      'hl.dsp.focus({ window = "class:' + pattern + '" })'])
+    close()
+  }
+
   function selectSource(delta) {
     if (players.length < 2) return
     var index = Math.max(0, players.indexOf(player))
@@ -341,6 +350,15 @@ Panel {
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
               font.letterSpacing: 1.5
+
+              MouseArea {
+                anchors.left: parent.left
+                width: Math.min(parent.width, parent.implicitWidth)
+                height: parent.height
+                enabled: root.player !== null
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.showPlayerWindow()
+              }
             }
             Row {
               width: parent.width
