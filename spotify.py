@@ -156,6 +156,13 @@ def evaluate_in_spotify(expression):
     return b'"value":true' in reply
 
 
+def notify(title, body):
+    try:
+        subprocess.run(["notify-send", "-a", "Omarchy Player", title, body], timeout=3)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+
 def dj():
     try:
         context = (api("GET", "/me/player") or {}).get("context") or {}
@@ -169,6 +176,7 @@ def dj():
             pass
         # Reopening DJ restarts it, so skip when the switch can't be reached.
         player_call("Next")
+        notify("DJ switch unavailable", "Skipped instead. See the DJ switch section of the README.")
     else:
         player_call("OpenUri", DJ_URI)
 

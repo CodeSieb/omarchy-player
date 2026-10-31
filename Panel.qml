@@ -12,6 +12,7 @@ Panel {
 
   property string preferredKey: ""
   property var levels: []
+  property bool spectrumMissing: false
 
   readonly property var players: {
     var all = Mpris.players ? Mpris.players.values : []
@@ -233,9 +234,12 @@ Panel {
   Process {
     id: spectrum
     command: ["python3", "-I", String(Qt.resolvedUrl("visualizer.py")).replace("file://", "")]
-    running: root.opened && root.playing && root.visualizerEnabled
+    running: root.opened && root.playing && root.visualizerEnabled && !root.spectrumMissing
     stdout: SplitParser {
-      onRead: function(line) { root.levels = line.split(" ").map(Number) }
+      onRead: function(line) {
+        if (line === "missing-numpy") root.spectrumMissing = true
+        else root.levels = line.split(" ").map(Number)
+      }
     }
     onRunningChanged: if (!running) root.levels = []
   }
@@ -439,6 +443,16 @@ Panel {
           width: parent.width
           height: visible ? Style.space(64) : 0
           visible: root.visualizerEnabled
+
+          Text {
+            anchors.centerIn: parent
+            visible: root.spectrumMissing
+            textFormat: Text.PlainText
+            text: "Install python-numpy for the spectrum"
+            color: root.dim
+            font.family: root.fontFamily
+            font.pixelSize: Style.font.caption
+          }
 
           readonly property var levels: root.levels
           readonly property color low: root.accent

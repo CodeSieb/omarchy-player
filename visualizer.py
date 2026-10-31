@@ -4,7 +4,11 @@ import signal
 import subprocess
 import sys
 
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    print("missing-numpy", flush=True)
+    sys.exit(0)
 
 RATE = 44100
 FPS = 30
