@@ -58,7 +58,7 @@ Or clone the repo and run `./install.sh`.
 | `d` | Spotify DJ |
 | `Esc` | Close |
 
-To open the panel with a shortcut, bind `omarchy-shell siebe.omarchy-player toggle`.
+To open the panel with a shortcut, bind `omarchy-shell codesieb.omarchy-player toggle`.
 
 Settings: `maxTitleLength`, `visualizer` and `hideWhenIdle`.
 
@@ -75,7 +75,7 @@ Everything above except the live heart and DJ switch works without this.
 ```bash
 mkdir -p ~/.config/omarchy-player ~/.local/state/omarchy-player
 echo YOUR_CLIENT_ID > ~/.config/omarchy-player/client_id
-python3 ~/.config/omarchy/plugins/siebe.omarchy-player/spotify.py login
+python3 ~/.config/omarchy/plugins/codesieb.omarchy-player/spotify.py login
 ```
 
 Your token stays in `~/.local/state/omarchy-player/spotify.json`. Delete that file to log out.

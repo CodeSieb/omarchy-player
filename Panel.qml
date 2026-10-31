@@ -7,8 +7,8 @@ import qs.Ui
 
 Panel {
   id: root
-  moduleName: "siebe.omarchy-player"
-  ipcTarget: "siebe.omarchy-player"
+  moduleName: "codesieb.omarchy-player"
+  ipcTarget: "codesieb.omarchy-player"
 
   property string preferredKey: ""
   property var levels: []
