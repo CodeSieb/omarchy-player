@@ -37,6 +37,15 @@ omarchy plugin add https://github.com/CodeSieb/omarchy-player.git --enable
 
 Or clone the repo and run `./install.sh`.
 
+## Remove
+
+```bash
+omarchy plugin remove codesieb.omarchy-player
+rm -rf ~/.config/omarchy-player ~/.local/state/omarchy-player
+```
+
+If you enabled the DJ switch, also delete its line from `~/.config/spotify-flags.conf`.
+
 ## Usage
 
 | In the bar | Action |
