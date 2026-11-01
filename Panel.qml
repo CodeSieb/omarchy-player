@@ -152,6 +152,8 @@ Panel {
   property var likedTracks: ({})
   property bool apiLiked: false
   property bool apiAvailable: false
+  property string likeTrack: ""
+  property string likeSent: ""
   readonly property string trackId: player && player.metadata ? String(player.metadata["mpris:trackid"] || "") : ""
   readonly property string spotifyId: trackId.indexOf("/com/spotify/track/") === 0 ? trackId.split("/").pop() : ""
   readonly property string spotifyHelper: String(Qt.resolvedUrl("spotify.py")).replace("file://", "")
@@ -177,6 +179,7 @@ Panel {
     id: likeCheck
     stdout: SplitParser {
       onRead: function(line) {
+        if (likeSet.running) return
         root.apiAvailable = line !== "unavailable"
         root.apiLiked = line === "true"
       }
@@ -185,7 +188,17 @@ Panel {
 
   Process {
     id: likeSet
-    onExited: root.checkLiked()
+    // Restarting a running helper can lose the write, so send a quick change afterwards.
+    onExited: {
+      if (root.spotifyId === root.likeTrack && String(root.apiLiked) !== root.likeSent) root.sendLike()
+      else root.checkLiked()
+    }
+  }
+
+  function sendLike() {
+    likeTrack = spotifyId
+    likeSent = String(apiLiked)
+    likeSet.exec(["python3", "-I", spotifyHelper, "set", likeTrack, likeSent])
   }
 
   // MPRIS has no like call, so press Spotify's own shortcut in its window.
@@ -193,7 +206,7 @@ Panel {
     if (!canLike) return
     if (apiAvailable && spotifyId) {
       apiLiked = !apiLiked
-      likeSet.exec(["python3", "-I", spotifyHelper, "set", spotifyId, String(apiLiked)])
+      if (!likeSet.running) sendLike()
       return
     }
     Quickshell.execDetached(["hyprctl", "dispatch",
