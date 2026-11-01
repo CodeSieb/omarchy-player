@@ -20,6 +20,7 @@ REDIRECT_URI = "http://127.0.0.1:43117/callback"
 SCOPES = "user-library-read user-library-modify user-read-playback-state"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
 TOKEN_FILE = os.path.expanduser("~/.local/state/omarchy-player/spotify.json")
+LIMIT_FILE = os.path.expanduser("~/.local/state/omarchy-player/rate-limit")
 DJ_URI = "spotify:playlist:37i9dQZF1EYkqdzj48dyYq"
 DEBUG_PORT = 9229
 # Spotify's DJ switch has no API and no label: it's the bar button before Lyrics.
@@ -69,12 +70,30 @@ def access_token():
     return fresh["access_token"]
 
 
+def check_rate_limit():
+    try:
+        with open(LIMIT_FILE) as file:
+            blocked_until = float(file.read())
+    except (OSError, ValueError):
+        return
+    if time.time() < blocked_until:
+        raise RuntimeError("Spotify rate limit active")
+
+
 def api(method, path):
+    check_rate_limit()
     request = urllib.request.Request(
         "https://api.spotify.com/v1" + path, method=method,
         headers={"Authorization": "Bearer " + access_token()})
-    with urllib.request.urlopen(request, timeout=15) as response:
-        data = response.read()
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:
+            data = response.read()
+    except urllib.error.HTTPError as error:
+        if error.code == 429:
+            # Retrying during a block can extend it, so stop until Spotify says to return.
+            with open(LIMIT_FILE, "w") as file:
+                file.write(str(time.time() + int(error.headers.get("Retry-After") or 60)))
+        raise
     return json.loads(data) if data else None
 
 

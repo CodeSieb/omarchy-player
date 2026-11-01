@@ -164,17 +164,9 @@ Panel {
   }
 
   onSpotifyIdChanged: checkLiked()
+  // Likes made in Spotify send no signal, so check on open instead of polling its rate limit.
   onOpenedChanged: if (opened) checkLiked()
-
-  // Change signals skip the track already playing at load, and likes made in
-  // Spotify itself send no signal at all, so keep checking.
-  Timer {
-    interval: 20000
-    repeat: true
-    running: root.spotifyId !== ""
-    triggeredOnStart: true
-    onTriggered: root.checkLiked()
-  }
+  Component.onCompleted: checkLiked()
 
   Process {
     id: likeCheck
