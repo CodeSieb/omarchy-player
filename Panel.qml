@@ -163,6 +163,16 @@ Panel {
 
   onSpotifyIdChanged: checkLiked()
 
+  // Change signals skip the track already playing at load, and likes made in
+  // Spotify itself send no signal at all, so keep checking.
+  Timer {
+    interval: 20000
+    repeat: true
+    running: root.spotifyId !== ""
+    triggeredOnStart: true
+    onTriggered: root.checkLiked()
+  }
+
   Process {
     id: likeCheck
     stdout: SplitParser {
