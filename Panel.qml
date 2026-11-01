@@ -199,6 +199,13 @@ Panel {
     Quickshell.execDetached(["python3", "-I", spotifyHelper, "dj"])
   }
 
+  // Liked tracks are private, and plugin installs skip install.sh, so lock the folder here.
+  Process {
+    running: true
+    command: ["sh", "-c", 'install -d -m 700 "$1" && chmod -f 600 "$1/liked.json" || true', "sh",
+      Quickshell.env("HOME") + "/.local/state/omarchy-player"]
+  }
+
   FileView {
     id: likedFile
     path: Quickshell.env("HOME") + "/.local/state/omarchy-player/liked.json"
