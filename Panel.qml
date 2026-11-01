@@ -164,6 +164,7 @@ Panel {
   }
 
   onSpotifyIdChanged: checkLiked()
+  onOpenedChanged: if (opened) checkLiked()
 
   // Change signals skip the track already playing at load, and likes made in
   // Spotify itself send no signal at all, so keep checking.
