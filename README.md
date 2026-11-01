@@ -8,6 +8,9 @@
 
 Spotify, browsers, mpv and anything else that speaks MPRIS, with a live audio spectrum.
 
+[![Omarchy Plugins](https://img.shields.io/badge/Omarchy%20Plugins-listed-f38ba8?style=flat-square)](https://plugins.omarchy.org/plugin.html?id=codesieb.omarchy-player)
+[![Release](https://img.shields.io/github/v/release/CodeSieb/omarchy-player?style=flat-square&color=cba6f7)](https://github.com/CodeSieb/omarchy-player/releases)
+[![Last commit](https://img.shields.io/github/last-commit/CodeSieb/omarchy-player?style=flat-square&color=94e2d5)](https://github.com/CodeSieb/omarchy-player/commits/main)
 [![License: MIT](https://img.shields.io/badge/license-MIT-89b4fa?style=flat-square)](LICENSE)
 [![Omarchy](https://img.shields.io/badge/Omarchy-shell%20plugin-89b4fa?style=flat-square)](https://omarchy.org)
 [![Quickshell](https://img.shields.io/badge/built%20with-Quickshell-a6e3a1?style=flat-square)](https://quickshell.org)
@@ -30,6 +33,8 @@ Spotify, browsers, mpv and anything else that speaks MPRIS, with a live audio sp
 ## Install
 
 Requires Omarchy 4 and `python-numpy`.
+
+Find it on the [Omarchy plugin marketplace](https://plugins.omarchy.org/plugin.html?id=codesieb.omarchy-player), or install it directly:
 
 ```bash
 omarchy plugin add https://github.com/CodeSieb/omarchy-player.git --enable
